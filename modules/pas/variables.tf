@@ -10,7 +10,5 @@ variable "cf_storage_account_name" {}
 
 variable "network_name" {}
 
-variable "bosh_deployed_vms_security_group_id" {}
-
 variable "pas_subnet_name" {}
 variable "services_subnet_name" {}

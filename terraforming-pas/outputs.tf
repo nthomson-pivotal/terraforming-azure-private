@@ -94,10 +94,6 @@ output "pcf_resource_group_name" {
   value = "${module.infra.resource_group_name}"
 }
 
-output "ops_manager_security_group_name" {
-  value = "${module.infra.security_group_name}"
-}
-
 output "bosh_root_storage_account" {
   value = "${module.infra.bosh_root_storage_account}"
 }

@@ -39,7 +39,6 @@ module "ops_manager" {
   optional_ops_manager_image_uri = "${var.optional_ops_manager_image_uri}"
 
   resource_group_name = "${module.infra.resource_group_name}"
-  security_group_id   = "${module.infra.security_group_id}"
   subnet_id           = "${module.infra.infrastructure_subnet_id}"
 }
 
@@ -57,7 +56,6 @@ module "pas" {
 
   resource_group_name                 = "${module.infra.resource_group_name}"
   network_name                        = "${module.infra.network_name}"
-  bosh_deployed_vms_security_group_id = "${module.infra.bosh_deployed_vms_security_group_id}"
 
   pas_subnet_name        = "${var.pas_subnet_name}"
   services_subnet_name        = "${var.services_subnet_name}"
