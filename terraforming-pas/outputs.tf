@@ -22,34 +22,6 @@ output "client_secret" {
   value     = "${var.client_secret}"
 }
 
-output "ops_manager_dns" {
-  value = "${module.ops_manager.dns_name}"
-}
-
-output "optional_ops_manager_dns" {
-  value = "${module.ops_manager.optional_dns_name}"
-}
-
-output "mysql_dns" {
-  value = "${module.pas.mysql_dns}"
-}
-
-output "tcp_domain" {
-  value = "${module.pas.tcp_domain}"
-}
-
-output "sys_domain" {
-  value = "${module.pas.sys_domain}"
-}
-
-output "apps_domain" {
-  value = "${module.pas.apps_domain}"
-}
-
-output "env_dns_zone_name_servers" {
-  value = "${module.infra.dns_zone_name_servers}"
-}
-
 output "ssl_cert" {
   sensitive = true
   value     = "${length(module.certs.ssl_cert) > 0 ? module.certs.ssl_cert : var.ssl_cert}"
@@ -58,16 +30,6 @@ output "ssl_cert" {
 output "ssl_private_key" {
   sensitive = true
   value     = "${length(module.certs.ssl_private_key) > 0 ? module.certs.ssl_private_key : var.ssl_private_key}"
-}
-
-output "iso_seg_ssl_cert" {
-  sensitive = true
-  value     = "${module.isolation_segment.ssl_cert}"
-}
-
-output "iso_seg_ssl_private_key" {
-  sensitive = true
-  value     = "${module.isolation_segment.ssl_private_key}"
 }
 
 output "web_lb_name" {
@@ -136,10 +98,6 @@ output "ops_manager_security_group_name" {
   value = "${module.infra.security_group_name}"
 }
 
-output "bosh_deployed_vms_security_group_name" {
-  value = "${module.infra.bosh_deployed_vms_security_group_name}"
-}
-
 output "bosh_root_storage_account" {
   value = "${module.infra.bosh_root_storage_account}"
 }
@@ -183,26 +141,8 @@ output "ops_manager_ssh_private_key" {
   value     = "${module.ops_manager.ops_manager_ssh_private_key}"
 }
 
-output "ops_manager_public_ip" {
-  value = "${module.ops_manager.ops_manager_public_ip}"
-}
-
-output "ops_manager_ip" {
-  value = "${module.ops_manager.ops_manager_public_ip}"
-}
-
-output "optional_ops_manager_public_ip" {
-  value = "${module.ops_manager.optional_ops_manager_public_ip}"
-}
-
 output "ops_manager_private_ip" {
   value = "${module.ops_manager.ops_manager_private_ip}"
-}
-
-output "isolation_segment" {
-  value = {
-    "lb_name" = "${module.isolation_segment.lb_name}"
-  }
 }
 
 # Deprecated properties

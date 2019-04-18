@@ -21,6 +21,10 @@ module "infra" {
   dns_suffix                        = "${var.dns_suffix}"
   pcf_infrastructure_subnet         = "${var.pcf_infrastructure_subnet}"
   pcf_virtual_network_address_space = "${var.pcf_virtual_network_address_space}"
+
+  vnet_name                         = "${var.vnet_name}"
+  infrastructure_subnet_name        = "${var.infrastructure_subnet_name}"
+  resource_group_name               = "${var.resource_group_name}"
 }
 
 module "ops_manager" {
@@ -37,7 +41,6 @@ module "ops_manager" {
   optional_ops_manager_image_uri = "${var.optional_ops_manager_image_uri}"
 
   resource_group_name = "${module.infra.resource_group_name}"
-  dns_zone_name       = "${module.infra.dns_zone_name}"
   security_group_id   = "${module.infra.security_group_id}"
   subnet_id           = "${module.infra.infrastructure_subnet_id}"
 }
@@ -48,9 +51,6 @@ module "pas" {
   env_name = "${var.env_name}"
   location = "${var.location}"
 
-  pas_subnet_cidr      = "${var.pcf_pas_subnet}"
-  services_subnet_cidr = "${var.pcf_services_subnet}"
-
   cf_storage_account_name              = "${var.cf_storage_account_name}"
   cf_buildpacks_storage_container_name = "${var.cf_buildpacks_storage_container_name}"
   cf_droplets_storage_container_name   = "${var.cf_droplets_storage_container_name}"
@@ -58,9 +58,11 @@ module "pas" {
   cf_resources_storage_container_name  = "${var.cf_resources_storage_container_name}"
 
   resource_group_name                 = "${module.infra.resource_group_name}"
-  dns_zone_name                       = "${module.infra.dns_zone_name}"
   network_name                        = "${module.infra.network_name}"
   bosh_deployed_vms_security_group_id = "${module.infra.bosh_deployed_vms_security_group_id}"
+
+  pas_subnet_name        = "${var.pas_subnet_name}"
+  services_subnet_name        = "${var.services_subnet_name}"
 }
 
 module "certs" {
@@ -70,21 +72,4 @@ module "certs" {
   dns_suffix         = "${var.dns_suffix}"
   ssl_ca_cert        = "${var.ssl_ca_cert}"
   ssl_ca_private_key = "${var.ssl_ca_private_key}"
-}
-
-module "isolation_segment" {
-  source = "../modules/isolation_segment"
-
-  count = "${var.isolation_segment ? 1 : 0}"
-
-  environment = "${var.env_name}"
-  location    = "${var.location}"
-
-  ssl_cert           = "${var.iso_seg_ssl_cert}"
-  ssl_private_key    = "${var.iso_seg_ssl_private_key}"
-  ssl_ca_cert        = "${var.iso_seg_ssl_ca_cert}"
-  ssl_ca_private_key = "${var.iso_seg_ssl_ca_private_key}"
-
-  resource_group_name = "${module.infra.resource_group_name}"
-  dns_zone            = "${module.infra.dns_zone_name}"
 }

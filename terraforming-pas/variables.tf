@@ -1,5 +1,20 @@
 variable "env_name" {}
 
+variable "resource_group_name" {
+
+}
+
+variable "infrastructure_subnet_name" {
+
+}
+
+variable "pas_subnet_name" {}
+variable "services_subnet_name" {}
+
+variable "vnet_name" {
+
+}
+
 variable "cloud_name" {
   description = "The Azure cloud environment to use. Available values at https://www.terraform.io/docs/providers/azurerm/#environment"
   default     = "public"

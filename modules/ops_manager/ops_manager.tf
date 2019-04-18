@@ -95,35 +95,12 @@ resource "azurerm_image" "ops_manager_image" {
 
 # ==================== DNS
 
-resource "azurerm_dns_a_record" "ops_manager_dns" {
-  name                = "pcf"
-  zone_name           = "${var.dns_zone_name}"
-  resource_group_name = "${var.resource_group_name}"
-  ttl                 = "60"
-  records             = ["${azurerm_public_ip.ops_manager_public_ip.ip_address}"]
-}
-
-resource "azurerm_dns_a_record" "optional_ops_manager_dns" {
-  name                = "pcf-optional"
-  zone_name           = "${var.dns_zone_name}"
-  resource_group_name = "${var.resource_group_name}"
-  ttl                 = "60"
-  records             = ["${azurerm_public_ip.optional_ops_manager_public_ip.ip_address}"]
-  count               = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
-}
+# Niall: Removed
 
 # ==================== VMs
 
-resource "azurerm_public_ip" "ops_manager_public_ip" {
-  name                = "${var.env_name}-ops-manager-public-ip"
-  location            = "${var.location}"
-  resource_group_name = "${var.resource_group_name}"
-  allocation_method   = "Static"
-}
-
 resource "azurerm_network_interface" "ops_manager_nic" {
   name                      = "${var.env_name}-ops-manager-nic"
-  depends_on                = ["azurerm_public_ip.ops_manager_public_ip"]
   location                  = "${var.location}"
   resource_group_name       = "${var.resource_group_name}"
   network_security_group_id = "${var.security_group_id}"
@@ -134,7 +111,6 @@ resource "azurerm_network_interface" "ops_manager_nic" {
     subnet_id                     = "${var.subnet_id}"
     private_ip_address_allocation = "static"
     private_ip_address            = "${var.ops_manager_private_ip}"
-    public_ip_address_id          = "${azurerm_public_ip.ops_manager_public_ip.id}"
   }
 }
 
@@ -251,24 +227,8 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
 
 # ==================== Outputs
 
-output "dns_name" {
-  value = "${azurerm_dns_a_record.ops_manager_dns.name}.${azurerm_dns_a_record.ops_manager_dns.zone_name}"
-}
-
-output "optional_dns_name" {
-  value = "${element(concat(azurerm_dns_a_record.optional_ops_manager_dns.*.name, list("")), 0)}.${element(concat(azurerm_dns_a_record.optional_ops_manager_dns.*.zone_name, list("")), 0)}"
-}
-
 output "ops_manager_private_ip" {
   value = "${var.ops_manager_private_ip}"
-}
-
-output "ops_manager_public_ip" {
-  value = "${azurerm_public_ip.ops_manager_public_ip.ip_address}"
-}
-
-output "optional_ops_manager_public_ip" {
-  value = "${element(concat(azurerm_public_ip.optional_ops_manager_public_ip.*.ip_address, list("")), 0)}"
 }
 
 output "ops_manager_ssh_public_key" {
