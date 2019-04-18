@@ -17,8 +17,6 @@ module "infra" {
 
   env_name                          = "${var.env_name}"
   location                          = "${var.location}"
-  dns_subdomain                     = "${var.dns_subdomain}"
-  dns_suffix                        = "${var.dns_suffix}"
   pcf_infrastructure_subnet         = "${var.pcf_infrastructure_subnet}"
   pcf_virtual_network_address_space = "${var.pcf_virtual_network_address_space}"
 
@@ -69,7 +67,6 @@ module "certs" {
   source = "../modules/certs"
 
   env_name           = "${var.env_name}"
-  dns_suffix         = "${var.dns_suffix}"
   ssl_ca_cert        = "${var.ssl_ca_cert}"
   ssl_ca_private_key = "${var.ssl_ca_private_key}"
 }
