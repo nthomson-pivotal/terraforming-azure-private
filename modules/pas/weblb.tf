@@ -1,12 +1,3 @@
-resource "azurerm_public_ip" "web-lb-public-ip" {
-  name                    = "web-lb-public-ip"
-  location                = "${var.location}"
-  resource_group_name     = "${var.resource_group_name}"
-  allocation_method       = "Static"
-  sku                     = "Standard"
-  idle_timeout_in_minutes = 30
-}
-
 resource "azurerm_lb" "web" {
   name                = "${var.env_name}-web-lb"
   location            = "${var.location}"
@@ -15,7 +6,7 @@ resource "azurerm_lb" "web" {
 
   frontend_ip_configuration = {
     name                 = "frontendip"
-    public_ip_address_id = "${azurerm_public_ip.web-lb-public-ip.id}"
+    subnet_id            = "${var.pas_subnet_id}"
   }
 }
 

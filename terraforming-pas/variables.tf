@@ -156,6 +156,14 @@ variable "infrastructure_subnet_id" {
   type = "string"
 }
 
+variable "pas_subnet_id" {
+  type = "string"
+}
+
+variable "services_subnet_id" {
+  type = "string"
+}
+
 /*******************************
  * Deprecated, Delete After Next Release *
  *******************************/

@@ -59,6 +59,9 @@ module "pas" {
 
   pas_subnet_name             = "${var.pas_subnet_name}"
   services_subnet_name        = "${var.services_subnet_name}"
+
+  pas_subnet_id           = "${var.pas_subnet_id}"
+  services_subnet_id        = "${var.services_subnet_id}"
 }
 
 module "certs" {

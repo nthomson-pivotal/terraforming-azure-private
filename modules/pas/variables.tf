@@ -10,5 +10,11 @@ variable "cf_storage_account_name" {}
 
 variable "network_name" {}
 
+variable "pas_subnet_id" {
+}
+
+variable "services_subnet_id" {
+}
+
 variable "pas_subnet_name" {}
 variable "services_subnet_name" {}
