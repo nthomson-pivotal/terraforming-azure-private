@@ -32,8 +32,12 @@ variable "security_group_id" {
   default = ""
 }
 
-variable "subnet_id" {
-  default = ""
+variable "vnet_name" {
+
+}
+
+variable "infrastructure_subnet_name" {
+
 }
 
 variable "dns_zone_name" {
@@ -99,6 +103,12 @@ resource "azurerm_image" "ops_manager_image" {
 
 # ==================== VMs
 
+data "azurerm_subnet" "infrastructure_subnet" {
+  name                 = "${var.infrastructure_subnet_name}"
+  virtual_network_name = "${var.vnet_name}"
+  resource_group_name  = "${var.resource_group_name}"
+}
+
 resource "azurerm_network_interface" "ops_manager_nic" {
   name                      = "${var.env_name}-ops-manager-nic"
   location                  = "${var.location}"
@@ -108,9 +118,9 @@ resource "azurerm_network_interface" "ops_manager_nic" {
 
   ip_configuration {
     name                          = "${var.env_name}-ops-manager-ip-config"
-    subnet_id                     = "${var.subnet_id}"
+    subnet_id                     = "${data.azurerm_subnet.infrastructure_subnet.id}"
     private_ip_address_allocation = "static"
-    private_ip_address            = "${var.ops_manager_private_ip}"
+    private_ip_address            = "${cidrhost(data.azurerm_subnet.infrastructure_subnet.address_prefix, 4)}"
   }
 }
 
@@ -163,17 +173,8 @@ variable "optional_ops_manager_image_uri" {
   default = ""
 }
 
-resource "azurerm_public_ip" "optional_ops_manager_public_ip" {
-  name                         = "${var.env_name}-optional-ops-manager-public-ip"
-  location                     = "${var.location}"
-  resource_group_name          = "${var.resource_group_name}"
-  public_ip_address_allocation = "static"
-  count                        = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
-}
-
 resource "azurerm_network_interface" "optional_ops_manager_nic" {
   name                      = "${var.env_name}-optional-ops-manager-nic"
-  depends_on                = ["azurerm_public_ip.optional_ops_manager_public_ip"]
   location                  = "${var.location}"
   resource_group_name       = "${var.resource_group_name}"
   count                     = "${min(length(split("", var.optional_ops_manager_image_uri)),1)}"
@@ -181,10 +182,9 @@ resource "azurerm_network_interface" "optional_ops_manager_nic" {
 
   ip_configuration {
     name                          = "${var.env_name}-optional-ops-manager-ip-config"
-    subnet_id                     = "${var.subnet_id}"
+    subnet_id                     = "${data.azurerm_subnet.infrastructure_subnet.id}"
     private_ip_address_allocation = "static"
-    private_ip_address            = "10.0.8.5"
-    public_ip_address_id          = "${azurerm_public_ip.optional_ops_manager_public_ip.id}"
+    private_ip_address            = "${cidrhost(data.azurerm_subnet.infrastructure_subnet.address_prefix, 4)}"
   }
 }
 

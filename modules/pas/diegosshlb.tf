@@ -1,11 +1,3 @@
-resource "azurerm_public_ip" "diego-ssh-lb-public-ip" {
-  name                = "diego-ssh-lb-public-ip"
-  location            = "${var.location}"
-  resource_group_name = "${var.resource_group_name}"
-  allocation_method   = "Static"
-  sku                 = "Standard"
-}
-
 resource "azurerm_lb" "diego-ssh" {
   name                = "${var.env_name}-diego-ssh-lb"
   location            = "${var.location}"
@@ -13,8 +5,10 @@ resource "azurerm_lb" "diego-ssh" {
   sku                 = "Standard"
 
   frontend_ip_configuration = {
-    name                 = "frontendip"
-    public_ip_address_id = "${azurerm_public_ip.diego-ssh-lb-public-ip.id}"
+    name                          = "frontendip"
+    subnet_id                     = "${data.azurerm_subnet.pas_subnet.id}"
+    private_ip_address_allocation = "static"
+    private_ip_address            = "${cidrhost(data.azurerm_subnet.pas_subnet.address_prefix, 12)}"
   }
 }
 

@@ -5,8 +5,10 @@ resource "azurerm_lb" "mysql" {
   sku                 = "Standard"
 
   frontend_ip_configuration = {
-    name      = "frontendip"
-    subnet_id = "${data.azurerm_subnet.pas_subnet.id}"
+    name                          = "frontendip"
+    subnet_id                     = "${data.azurerm_subnet.pas_subnet.id}"
+    private_ip_address_allocation = "static"
+    private_ip_address            = "${cidrhost(data.azurerm_subnet.pas_subnet.address_prefix, 13)}"
   }
 }
 
