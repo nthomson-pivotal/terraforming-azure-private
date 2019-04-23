@@ -89,12 +89,6 @@ variable "ops_manager_image_uri" {
   description = "Ops Manager image on Azure. Ops Manager VM will be skipped if this is empty"
 }
 
-variable "ops_manager_private_ip" {
-  type        = "string"
-  description = "IP for the Ops Manager instance if not deploying in the default infrasstructure subnet"
-  default     = "10.0.8.4"
-}
-
 variable "optional_ops_manager_image_uri" {
   default = ""
 }

@@ -12,10 +12,6 @@ variable "vm_count" {
   default = 1
 }
 
-variable "ops_manager_private_ip" {
-  default = ""
-}
-
 variable "ops_manager_image_uri" {
   default = ""
 }
@@ -228,7 +224,7 @@ resource "azurerm_virtual_machine" "optional_ops_manager_vm" {
 # ==================== Outputs
 
 output "ops_manager_private_ip" {
-  value = "${var.ops_manager_private_ip}"
+  value = "${azurerm_network_interface.ops_manager_nic.*.private_ip_address}"
 }
 
 output "ops_manager_ssh_public_key" {

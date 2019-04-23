@@ -34,7 +34,6 @@ module "ops_manager" {
   vm_count               = "${var.ops_manager_vm == false ? 0 : (var.ops_manager_image_uri == "" ? 0 : 1)}"
   ops_manager_image_uri  = "${var.ops_manager_image_uri}"
   ops_manager_vm_size    = "${var.ops_manager_vm_size}"
-  ops_manager_private_ip = "${var.ops_manager_private_ip}"
 
   optional_ops_manager_image_uri = "${var.optional_ops_manager_image_uri}"
 
