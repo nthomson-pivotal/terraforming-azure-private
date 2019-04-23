@@ -49,7 +49,7 @@ output "tcp_lb_name" {
 }
 
 output "network_name" {
-  value = "${module.infra.network_name}"
+  value = "${var.vnet_name}"
 }
 # TODO(cdutra): PAS
 

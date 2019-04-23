@@ -41,17 +41,6 @@ data "azurerm_resource_group" "pcf_resource_group" {
 
 # ============= Networking
 
-data "azurerm_virtual_network" "pcf_virtual_network" {
-  name                = "${var.vnet_name}"
-  resource_group_name = "${data.azurerm_resource_group.pcf_resource_group.name}"
-}
-
-data "azurerm_subnet" "infrastructure_subnet" {
-  name                 = "${var.infrastructure_subnet_name}"
-  virtual_network_name = "${data.azurerm_virtual_network.pcf_virtual_network.name}"
-  resource_group_name  = "${data.azurerm_resource_group.pcf_resource_group.name}"
-}
-
 # ============= DNS
 
 locals {
@@ -60,8 +49,4 @@ locals {
 
 output "resource_group_name" {
   value = "${data.azurerm_resource_group.pcf_resource_group.name}"
-}
-
-output "network_name" {
-  value = "${data.azurerm_virtual_network.pcf_virtual_network.name}"
 }
