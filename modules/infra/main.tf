@@ -65,25 +65,3 @@ output "resource_group_name" {
 output "network_name" {
   value = "${data.azurerm_virtual_network.pcf_virtual_network.name}"
 }
-
-output "infrastructure_subnet_id" {
-  value = "${data.azurerm_subnet.infrastructure_subnet.id}"
-}
-
-output "infrastructure_subnet_name" {
-  value = "${data.azurerm_subnet.infrastructure_subnet.name}"
-}
-
-output "infrastructure_subnet_cidr" {
-  value = "${data.azurerm_subnet.infrastructure_subnet.address_prefix}"
-}
-
-output "infrastructure_subnet_gateway" {
-  value = "${cidrhost(data.azurerm_subnet.infrastructure_subnet.address_prefix, 1)}"
-}
-
-# Deprecated
-
-output "infrastructure_subnet_cidrs" {
-  value = ["${data.azurerm_subnet.infrastructure_subnet.address_prefix}"]
-}

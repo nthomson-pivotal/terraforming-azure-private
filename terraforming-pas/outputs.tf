@@ -51,48 +51,7 @@ output "tcp_lb_name" {
 output "network_name" {
   value = "${module.infra.network_name}"
 }
-
-output "infrastructure_subnet_name" {
-  value = "${module.infra.infrastructure_subnet_name}"
-}
-
-output "infrastructure_subnet_cidr" {
-  value = "${module.infra.infrastructure_subnet_cidr}"
-}
-
-output "infrastructure_subnet_gateway" {
-  value = "${module.infra.infrastructure_subnet_gateway}"
-}
-
 # TODO(cdutra): PAS
-
-output "pas_subnet_name" {
-  value = "${module.pas.pas_subnet_name}"
-}
-
-output "pas_subnet_cidr" {
-  value = "${module.pas.pas_subnet_cidr}"
-}
-
-output "pas_subnet_gateway" {
-  value = "${module.pas.pas_subnet_gateway}"
-}
-
-output "services_subnet_name" {
-  value = "${module.pas.services_subnet_name}"
-}
-
-output "services_subnet_cidr" {
-  value = "${module.pas.services_subnet_cidr}"
-}
-
-output "services_subnet_gateway" {
-  value = "${module.pas.services_subnet_gateway}"
-}
-
-output "pcf_resource_group_name" {
-  value = "${module.infra.resource_group_name}"
-}
 
 output "bosh_root_storage_account" {
   value = "${module.infra.bosh_root_storage_account}"
@@ -139,46 +98,4 @@ output "ops_manager_ssh_private_key" {
 
 output "ops_manager_private_ip" {
   value = "${module.ops_manager.ops_manager_private_ip}"
-}
-
-# Deprecated properties
-
-output "management_subnet_name" {
-  value = "${module.infra.infrastructure_subnet_name}"
-}
-
-output "management_subnets" {
-  value = ["${module.infra.infrastructure_subnet_name}"]
-}
-
-output "management_subnet_cidrs" {
-  value = ["${module.infra.infrastructure_subnet_cidrs}"]
-}
-
-output "management_subnet_gateway" {
-  value = "${module.infra.infrastructure_subnet_gateway}"
-}
-
-output "infrastructure_subnet_cidrs" {
-  value = "${module.infra.infrastructure_subnet_cidrs}"
-}
-
-output "pas_subnet_cidrs" {
-  value = "${module.pas.pas_subnet_cidrs}"
-}
-
-output "services_subnet_cidrs" {
-  value = "${module.pas.services_subnet_cidrs}"
-}
-
-output "services_subnets" {
-  value = ["${module.pas.services_subnet_name}"]
-}
-
-output "infrastructure_subnets" {
-  value = ["${module.infra.infrastructure_subnet_name}"]
-}
-
-output "pas_subnets" {
-  value = ["${module.pas.pas_subnet_name}"]
 }

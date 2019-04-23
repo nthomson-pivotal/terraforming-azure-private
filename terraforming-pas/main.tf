@@ -39,7 +39,7 @@ module "ops_manager" {
   optional_ops_manager_image_uri = "${var.optional_ops_manager_image_uri}"
 
   resource_group_name = "${module.infra.resource_group_name}"
-  subnet_id           = "${module.infra.infrastructure_subnet_id}"
+  subnet_id           = "${var.infrastructure_subnet_id}"
 }
 
 module "pas" {
@@ -55,9 +55,9 @@ module "pas" {
   cf_resources_storage_container_name  = "${var.cf_resources_storage_container_name}"
 
   resource_group_name                 = "${module.infra.resource_group_name}"
-  network_name                        = "${module.infra.network_name}"
+  network_name                        = "${var.vnet_name}"
 
-  pas_subnet_name        = "${var.pas_subnet_name}"
+  pas_subnet_name             = "${var.pas_subnet_name}"
   services_subnet_name        = "${var.services_subnet_name}"
 }
 

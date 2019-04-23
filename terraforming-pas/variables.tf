@@ -152,6 +152,10 @@ variable "pcf_services_subnet" {
   default = "10.0.4.0/22"
 }
 
+variable "infrastructure_subnet_id" {
+  type = "string"
+}
+
 /*******************************
  * Deprecated, Delete After Next Release *
  *******************************/
